@@ -1,0 +1,43 @@
+SERVER_NODE = "hevelineS"
+SERVER_IP = "192.168.56.110"
+
+WORKER_NODE = "hevelineSW"
+WORKER_IP = "192.168.56.111"
+
+MEMORY = 1024
+CPU = 1
+GUI = false
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "hashicorp/bionic64"
+	config.vm.box_url = "file://~/Desktop/bionic64"
+	config.vm.box_check_update = false
+
+  # MASTER NODE
+  config.vm.define SERVER_NODE do |node|
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = SERVER_NODE
+      vb.memory = MEMORY
+      vb.cpus = CPU
+      vb.gui = GUI
+    end
+    node.vm.hostname = SERVER_NODE
+    node.vm.network :private_network, ip: SERVER_IP
+    node.vm.provision "shell", privileged: true, path: "scripts/server_k3s_installer.sh"
+  end
+
+
+  # WORKER NODE
+  config.vm.define WORKER_NODE do |node|
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = WORKER_NODE
+      vb.memory = MEMORY
+      vb.cpus = CPU
+      vb.gui = GUI
+    end
+    node.vm.hostname = WORKER_NODE
+    node.vm.network :private_network, ip: WORKER_IP
+    node.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    node.vm.provision "shell", privileged: true, path: "scripts/worker_k3s_installer.sh"
+  end
+end
