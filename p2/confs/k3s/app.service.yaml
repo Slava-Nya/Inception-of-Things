@@ -1,0 +1,40 @@
+# APP1 SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-one
+spec:
+  selector:
+    app: app-one
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+
+---
+# APP2 SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-two
+spec:
+  selector:
+    app: app-two
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+
+---
+# APP3 SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-three
+spec:
+  selector:
+    app: app-three
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
