@@ -9,13 +9,5 @@ export INSTALL_K3S_EXEC="server --write-kubeconfig-mode=644 --bind-address=192.1
 
 
 
-echo "[APP-1] : deploying..." 
-kubectl create configmap app1-html --from-file /vagrant/confs/k3s/html/app1/app.html
-kubectl create configmap app2-html --from-file /vagrant/confs/k3s/html/app2/app.html
-kubectl create configmap app3-html --from-file /vagrant/confs/k3s/html/app3/app.html
-
-kubectl apply -f /vagrant/confs/k3s/app.deployment.yaml
-kubectl apply -f /vagrant/confs/k3s/app.service.yaml
-kubectl apply -f /vagrant/confs/k3s/app.ingress.yaml
-
-
+echo "[APPS] : deploying..." 
+kubectl apply -f /vagrant/confs/k3s/
